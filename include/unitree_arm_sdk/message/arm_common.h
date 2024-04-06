@@ -5,6 +5,7 @@
 
 #pragma pack(1)
 
+namespace UNITREE_ARM {
 // 4 Byte
 enum class ArmFSMState{
     INVALID,
@@ -20,7 +21,7 @@ enum class ArmFSMState{
     TEACH,
     TEACHREPEAT,
     CALIBRATION,
-    SETTRAJ,//no longer used
+    SETTRAJ,
     BACKTOSTART,
     NEXT,
     LOWCMD
@@ -53,17 +54,11 @@ typedef struct{
      * 0x02: phase leakage
      * 0x04: overheat(including the motor windings and the motor shell)
      * 0x20: jumped
+     * 0x40: nothing
      */
     uint8_t error;
     Motor_Connected isConnected;
 }Motor_State;
-
-struct JointStateOld{//no error state return
-    float T;
-    float W;
-    float Acc;
-    float Pos;
-};
 
 struct JointState{
     float T;
@@ -73,24 +68,10 @@ struct JointState{
     Motor_State state[2];
 };
 
-//140bytes
-union UDPSendCmd{
-    uint8_t checkCmd;
-    JointCmd jointCmd[7];
-};
-
-struct UDPRecvStateOld{
-    JointStateOld jointStateOld[7];
-};
-
-struct UDPRecvState{
-    JointState jointState[7];
-};
-
 struct Posture{
-    double roll;
-    double pitch;
-    double yaw;
+    double rx;
+    double ry;
+    double rz;
     double x;
     double y;
     double z;
@@ -130,8 +111,7 @@ constexpr int SENDCMD_LENGTH    = (sizeof(SendCmd));
 constexpr int RECVSTATE_LENGTH  = (sizeof(RecvState));
 constexpr int JointCmd_LENGTH   = (sizeof(JointCmd));
 constexpr int JointState_LENGTH = (sizeof(JointState));
-constexpr int JointStateOld_LENGTH = (sizeof(JointStateOld));
 
 #pragma pack()
-
+}
 #endif  // _UNITREE_ARM_ARM_MSG_H_

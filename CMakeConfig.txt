@@ -1,5 +1,5 @@
 set(LIB_NAME z1sdk)
-set(PROJECT_VERSION 1.0)
+set(PROJECT_VERSION 1.2)
 
 ###### Special libraries ######
 set(EXTRA_LIBS "")

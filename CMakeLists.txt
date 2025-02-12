@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.3)
 
+cmake_minimum_required(VERSION 3.3...3.5)
 ###### LIBRARY NAME AND VERSION ######
-include(CMakeConfig.txt)
+include(CMakeConfig.cmake)
 
 if(NOT DEFINED DIR_DEPTH)
   set(DIR_DEPTH 0)

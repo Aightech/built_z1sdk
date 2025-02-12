@@ -20,8 +20,17 @@ else ()
   set(CMAKE_CXX_STANDARD 11)
   set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+  find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+  if (Eigen3_FOUND)
+    message("-- Eigen3 library Found")
+    list(APPEND EXTRA_LIBS Eigen3::Eigen)
+  else ()
+    message("Couldn't find Eigen3 library")
+  endif (Eigen3_FOUND)
+
   
   add_library(${LIB_NAME} SHARED IMPORTED GLOBAL)
+  target_link_libraries(${LIB_NAME} INTERFACE ${EXTRA_LIBS})
   set_target_properties( ${LIB_NAME} PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/bin/libZ1_SDK_x86_64.so" )
   set_target_properties( ${LIB_NAME} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 
